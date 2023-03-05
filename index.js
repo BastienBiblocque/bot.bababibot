@@ -1,7 +1,4 @@
 require('dotenv').config()
-//HEROKU TEST
-const host = 'localhost';
-const port = 3000;
 
 
 const { Client, Events, GatewayIntentBits } = require('discord.js');
@@ -44,6 +41,8 @@ client.on('messageCreate', (message) => {
         message.reply('Deux trois t\'es une oie, quatre cinq six t\'es une saucisse.');
     } else if (message.content === 'Quelle est le GOTY 2022 ?') {
         message.reply('Bah Elden Ring évidement.');
+    } else if (message.content === 'Bonne nuit') {
+        message.reply('Bonne nuit bébou :point_right: :point_left: ');
     } else if (random < 0.05 && !message.author.bot) {
         console.log("héhé");
         message.reply('https://media.tenor.com/8Ne_GzdBcikAAAAC/les-artisans-rotisseurs-palmashow.gif');
