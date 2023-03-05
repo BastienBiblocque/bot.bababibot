@@ -1,7 +1,4 @@
 require('dotenv').config()
-//HEROKU TEST
-const host = 'localhost';
-const port = 3000;
 
 
 const { Client, Events, GatewayIntentBits } = require('discord.js');
