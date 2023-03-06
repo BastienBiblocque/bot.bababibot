@@ -37,7 +37,7 @@ client.on('messageCreate', (message) => {
     }
     else if ((quoiValue.includes(message.content) || message.content.endsWith('quoi ?') || message.content.endsWith('quoi')) && !message.author.bot) {
         message.reply('FEUR');
-    } else if (heinValue.includes(message.content) && !message.author.bot) {
+    } else if ((heinValue.includes(message.content) || message.content.endsWith('hein') || message.content.endsWith('hein ?') || message.content.endsWith('hein?')) && !message.author.bot) {
         message.reply('Deux trois t\'es une oie, quatre cinq six t\'es une saucisse.');
     } else if (message.content === 'Quelle est le GOTY 2022 ?') {
         message.reply('Bah Elden Ring évidement.');
