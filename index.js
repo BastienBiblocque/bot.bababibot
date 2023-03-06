@@ -25,7 +25,7 @@ client.on('ready', () => {
 // Événement de réception de message
 client.on('messageCreate', (message) => {
     console.log(message.content)
-    const quoiValue = ['quoi', 'Quoi', 'quoi ?', 'Quoi ?'];
+    const quoiValue = ['quoi', 'Quoi', 'quoi ?', 'Quoi ?', 'koi', 'Koi', 'koi ?', 'Koi ?'];
     const heinValue = ['hein', 'Hein', 'hein ?', 'Hein ?'];
     const random = Math.random();
     console.log(random)
@@ -43,7 +43,7 @@ client.on('messageCreate', (message) => {
         message.reply('Bah Elden Ring évidement.');
     } else if (message.content === 'Bonne nuit') {
         message.reply('Bonne nuit bébou :point_right: :point_left: ');
-    } else if (random < 0.05 && !message.author.bot) {
+    } else if (random < 0.01 && !message.author.bot) {
         console.log("héhé");
         message.reply('https://media.tenor.com/8Ne_GzdBcikAAAAC/les-artisans-rotisseurs-palmashow.gif');
     }
