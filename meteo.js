@@ -1,7 +1,6 @@
 const axios = require("axios");
 
 class Meteo {
-
     async getWeather(city) {
         try {
             return axios.get(
