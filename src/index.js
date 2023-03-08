@@ -2,10 +2,10 @@ require('dotenv').config()
 
 
 const { Client, Events, GatewayIntentBits } = require('discord.js');
-const YoutubeRequest = require("./google");
-const SpotifyRequest = require("./spotify");
-const Meteo = require("./meteo");
-const Food = require("./food");
+const YoutubeRequest = require("./class/google");
+const SpotifyRequest = require("./class/spotify");
+const Meteo = require("./class/meteo");
+const Food = require("./class/food");
 
 const youtubeRequest = new YoutubeRequest();
 const spotifyRequest = new SpotifyRequest();
@@ -36,23 +36,25 @@ client.on('messageCreate', (message) => {
     const heinValue = ['hein', 'Hein', 'hein ?', 'Hein ?'];
     const random = Math.random();
     console.log(random)
-    if (message.content.startsWith(prefixFood) && !message.author.bot) {
+    if (message.author.bot) {
+        console.log('bot');
+    } else if (message.content.startsWith(prefixFood)) {
         sendFood(message);
-    } else if (message.content.startsWith(prefixMeteo) && !message.author.bot) {
+    } else if (message.content.startsWith(prefixMeteo)) {
         sendWeather(message);
-    } else if (message.content.startsWith(prefixLong) && !message.author.bot) {
+    } else if (message.content.startsWith(prefixLong)) {
         // sendSpotifyLinkWithYoutubeId(message, message.content.slice(prefixLong.length))
-    } else if (message.content.startsWith(prefixShort) && !message.author.bot) {
+    } else if (message.content.startsWith(prefixShort)) {
         // sendSpotifyLinkWithYoutubeId(message, message.content.slice(prefixShort.length))
-    } else if ((quoiValue.includes(message.content) || message.content.endsWith('quoi ?') || message.content.endsWith('quoi')) && !message.author.bot) {
+    } else if ((quoiValue.includes(message.content) || message.content.endsWith('quoi ?') || message.content.endsWith('quoi'))) {
         message.reply('FEUR');
-    } else if ((heinValue.includes(message.content) || message.content.endsWith('hein²') || message.content.endsWith('hein ?') || message.content.endsWith('hein?')) && !message.author.bot) {
+    } else if ((heinValue.includes(message.content) || message.content.endsWith('hein²') || message.content.endsWith('hein ?') || message.content.endsWith('hein?'))) {
         message.reply('Deux trois t\'es une oie, quatre cinq six t\'es une saucisse.');
     } else if (message.content === 'Quelle est le GOTY 2022 ?') {
         message.reply('Bah Elden Ring évidement.');
     } else if (message.content === 'Bonne nuit') {
         message.reply('Bonne nuit bébou :point_right: :point_left: ');
-    } else if (random < 0.05 && !message.author.bot) {
+    } else if (random < 0.05) {
         balekResponse(message);
     }
 })
