@@ -1,7 +1,7 @@
 class Food {
     data = {
-        'nancy': ['Burger King', 'Waffle Factory', 'Poutine', 'Nemo'],
-        'metz': ['Burger King', 'Waffle Factory', 'Woko', 'Kefan', 'Colombus', 'Poutine', 'Ayako Sushi', 'Tacos'],
+        'nancy': ['Burger King', 'Waffle Factory', 'Mon Caribou', 'Nemo', 'Voyou', 'Papa Fries', 'O Noodles', 'KFC', 'Tizi', 'Basilic & Co', 'Fox Den'],
+        'metz': ['Burger King', 'Waffle Factory', 'Woko', 'Kefan', 'Colombus', 'Mon Caribou', 'Ayako Sushi', 'Tacos', 'Burritos', 'Au bureau'],
     }
     getFood(city) {
         if (!this.data[city]) {
