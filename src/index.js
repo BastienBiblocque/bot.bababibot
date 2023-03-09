@@ -25,20 +25,19 @@ const client = new Client({
         GatewayIntentBits.MessageContent,
     ]
 });
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-});
 
 // Événement de réception de message
-client.on('messageCreate', (message) => {
+client.on('messageCreate', async (message) => {
     const usermessage = message.content.toLowerCase();
     const quoiValue = ['quoi', 'quoi ?', 'koi', 'koi ?'];
     const heinValue = ['hein', 'hein ?'];
     const random = Math.random();
     if (message.author.bot) {
         console.log('bot');
+    } else if (usermessage === 'api') {
+        foodRequest.postFood('nancy', 'woko', 'test');
     } else if (usermessage.startsWith(prefixFood)) {
-        sendFood(message, usermessage);
+        await sendFood(message, usermessage);
     } else if (usermessage.startsWith(prefixMeteo)) {
         sendWeather(message, usermessage);
     } else if (usermessage.startsWith(prefixLong)) {
@@ -46,13 +45,13 @@ client.on('messageCreate', (message) => {
     } else if (usermessage.startsWith(prefixShort)) {
         // sendSpotifyLinkWithYoutubeId(message, usermessage.slice(prefixShort.length))
     } else if ((quoiValue.includes(usermessage) || usermessage.endsWith('quoi ?') || usermessage.endsWith('quoi'))) {
-        message.reply('FEUR');
+        await message.reply('FEUR');
     } else if ((heinValue.includes(usermessage) || usermessage.endsWith('hein') || usermessage.endsWith('hein ?') || usermessage.endsWith('hein?'))) {
-        message.reply('Deux trois t\'es une oie, quatre cinq six t\'es une saucisse.');
+        await message.reply('Deux trois t\'es une oie, quatre cinq six t\'es une saucisse.');
     } else if (usermessage === 'Quelle est le GOTY 2022 ?') {
-        message.reply('Bah Elden Ring évidement.');
+        await message.reply('Bah Elden Ring évidement.');
     } else if (usermessage === 'Bonne nuit') {
-        message.reply('Bonne nuit bébou :point_right: :point_left: ');
+        await message.reply('Bonne nuit bébou :point_right: :point_left: ');
     } else if (random < 0.01) {
         balekResponse(message);
     }
@@ -67,11 +66,11 @@ function balekResponse(message) {
     }
 }
 
-function sendFood(message, messageContent) {
+async function sendFood(message, messageContent) {
     let split = messageContent.split(' ');
-    if  (split.length === 3) {
+    if (split.length === 3) {
         let ville = split[2];
-        message.reply(foodRequest.getFood(ville));
+        message.reply(await foodRequest.getFood(ville));
     } else {
         message.reply('Erreur de syntaxe, la commande est : b! food <ville>');
     }
@@ -96,4 +95,4 @@ function sendSpotifyLinkWithYoutubeId(message, youtubeId) {
     });
 }
 
-client.login(process.env.DISCORD_TOKEN)
+client.login(process.env.DISCORD_TOKEN).then(r => console.log('Logged in')).catch(e => console.log(e));
