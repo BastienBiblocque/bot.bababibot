@@ -38,9 +38,9 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) {
         console.log('bot');
     } else if (usermessage.startsWith(prefixFood)) {
-        sendFood(usermessage);
+        sendFood(message, usermessage);
     } else if (usermessage.startsWith(prefixMeteo)) {
-        sendWeather(usermessage);
+        sendWeather(message, usermessage);
     } else if (usermessage.startsWith(prefixLong)) {
         // sendSpotifyLinkWithYoutubeId(message, usermessage.slice(prefixLong.length))
     } else if (usermessage.startsWith(prefixShort)) {
@@ -67,8 +67,8 @@ function balekResponse(message) {
     }
 }
 
-function sendFood(message) {
-    let split = message.split(' ');
+function sendFood(message, messageContent) {
+    let split = messageContent.split(' ');
     if  (split.length === 3) {
         let ville = split[2];
         message.reply(foodRequest.getFood(ville));
@@ -76,8 +76,8 @@ function sendFood(message) {
         message.reply('Erreur de syntaxe, la commande est : b! food <ville>');
     }
 }
-function sendWeather(message) {
-    let split = message.split(' ');
+function sendWeather(message, messageContent) {
+    let split = messageContent.split(' ');
     if  (split.length === 3) {
         let ville = split[2];
         meteoRequest.getWeather(ville).then((meteo) => {
