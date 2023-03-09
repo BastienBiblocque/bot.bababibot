@@ -31,30 +31,29 @@ client.on('ready', () => {
 
 // Événement de réception de message
 client.on('messageCreate', (message) => {
-    console.log(message.content)
-    const quoiValue = ['quoi', 'Quoi', 'quoi ?', 'Quoi ?', 'koi', 'Koi', 'koi ?', 'Koi ?'];
-    const heinValue = ['hein', 'Hein', 'hein ?', 'Hein ?'];
+    const usermessage = message.content.toLowerCase();
+    const quoiValue = ['quoi', 'quoi ?', 'koi', 'koi ?'];
+    const heinValue = ['hein', 'hein ?'];
     const random = Math.random();
-    console.log(random)
     if (message.author.bot) {
         console.log('bot');
-    } else if (message.content.startsWith(prefixFood)) {
-        sendFood(message);
-    } else if (message.content.startsWith(prefixMeteo)) {
-        sendWeather(message);
-    } else if (message.content.startsWith(prefixLong)) {
-        // sendSpotifyLinkWithYoutubeId(message, message.content.slice(prefixLong.length))
-    } else if (message.content.startsWith(prefixShort)) {
-        // sendSpotifyLinkWithYoutubeId(message, message.content.slice(prefixShort.length))
-    } else if ((quoiValue.includes(message.content) || message.content.endsWith('quoi ?') || message.content.endsWith('quoi'))) {
+    } else if (usermessage.startsWith(prefixFood)) {
+        sendFood(usermessage);
+    } else if (usermessage.startsWith(prefixMeteo)) {
+        sendWeather(usermessage);
+    } else if (usermessage.startsWith(prefixLong)) {
+        // sendSpotifyLinkWithYoutubeId(message, usermessage.slice(prefixLong.length))
+    } else if (usermessage.startsWith(prefixShort)) {
+        // sendSpotifyLinkWithYoutubeId(message, usermessage.slice(prefixShort.length))
+    } else if ((quoiValue.includes(usermessage) || usermessage.endsWith('quoi ?') || usermessage.endsWith('quoi'))) {
         message.reply('FEUR');
-    } else if ((heinValue.includes(message.content) || message.content.endsWith('hein²') || message.content.endsWith('hein ?') || message.content.endsWith('hein?'))) {
+    } else if ((heinValue.includes(usermessage) || usermessage.endsWith('hein') || usermessage.endsWith('hein ?') || usermessage.endsWith('hein?'))) {
         message.reply('Deux trois t\'es une oie, quatre cinq six t\'es une saucisse.');
-    } else if (message.content === 'Quelle est le GOTY 2022 ?') {
+    } else if (usermessage === 'Quelle est le GOTY 2022 ?') {
         message.reply('Bah Elden Ring évidement.');
-    } else if (message.content === 'Bonne nuit') {
+    } else if (usermessage === 'Bonne nuit') {
         message.reply('Bonne nuit bébou :point_right: :point_left: ');
-    } else if (random < 0.05) {
+    } else if (random < 0.01) {
         balekResponse(message);
     }
 })
@@ -69,16 +68,16 @@ function balekResponse(message) {
 }
 
 function sendFood(message) {
-    let split = message.content.split(' ');
+    let split = message.split(' ');
     if  (split.length === 3) {
         let ville = split[2];
-        message.reply(foodRequest.getFood(ville.toLowerCase()));
+        message.reply(foodRequest.getFood(ville));
     } else {
         message.reply('Erreur de syntaxe, la commande est : b! food <ville>');
     }
 }
 function sendWeather(message) {
-    let split = message.content.split(' ');
+    let split = message.split(' ');
     if  (split.length === 3) {
         let ville = split[2];
         meteoRequest.getWeather(ville).then((meteo) => {
