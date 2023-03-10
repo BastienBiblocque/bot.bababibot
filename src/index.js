@@ -47,9 +47,9 @@ client.on('messageCreate', async (message) => {
         await message.reply('FEUR');
     } else if ((heinValue.includes(usermessage) || usermessage.endsWith('hein') || usermessage.endsWith('hein ?') || usermessage.endsWith('hein?'))) {
         await message.reply('Deux trois t\'es une oie, quatre cinq six t\'es une saucisse.');
-    } else if (usermessage === 'Quelle est le GOTY 2022 ?') {
+    } else if (usermessage === 'quelle est le goty 2022 ?') {
         await message.reply('Bah Elden Ring évidement.');
-    } else if (usermessage === 'Bonne nuit') {
+    } else if (usermessage === 'bonne nuit') {
         await message.reply('Bonne nuit bébou :point_right: :point_left: ');
     } else if (random < 0.01) {
         balekResponse(message);
