@@ -58,11 +58,10 @@ client.on('messageCreate', async (message) => {
 
 function balekResponse(message) {
     const random = Math.random();
-    if (random < 0.5) {
+    if (random < 0.5)
         message.reply('https://media.tenor.com/8Ne_GzdBcikAAAAC/les-artisans-rotisseurs-palmashow.gif');
-    } else {
+    else
         message.reply('https://tenor.com/view/menbalek-m-en-fou-listen-gif-17309847');
-    }
 }
 
 async function foodFunction(message, usermessage) {
