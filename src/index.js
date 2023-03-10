@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 
-const { Client, Events, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const YoutubeRequest = require("./class/google");
 const SpotifyRequest = require("./class/spotify");
 const Meteo = require("./class/meteo");
@@ -32,12 +32,11 @@ client.on('messageCreate', async (message) => {
     const quoiValue = ['quoi', 'quoi ?', 'koi', 'koi ?'];
     const heinValue = ['hein', 'hein ?'];
     const random = Math.random();
+
     if (message.author.bot) {
-        console.log('bot');
-    } else if (usermessage === 'api') {
-        foodRequest.postFood('nancy', 'woko', 'test');
+        console.log('Bot message');
     } else if (usermessage.startsWith(prefixFood)) {
-        await sendFood(message, usermessage);
+        await foodFunction(message, usermessage);
     } else if (usermessage.startsWith(prefixMeteo)) {
         sendWeather(message, usermessage);
     } else if (usermessage.startsWith(prefixLong)) {
@@ -66,13 +65,34 @@ function balekResponse(message) {
     }
 }
 
+async function foodFunction(message, usermessage) {
+    const command = usermessage.split(' ');
+    if (command[2] === 'add') {
+        if ( !command[3] || !command[4] ) {
+            message.reply('Erreur de syntaxe, la commande est : `b! food add <ville> <restaurant>`');
+        } else {
+            await foodRequest.postFood(command[3], command[4], 'test', message.guildId).then(
+                (data) => {
+                    if (data) {
+                        message.reply('Restaurant ajouté avec succès !');
+                    } else {
+                        message.reply('Erreur lors de l\'ajout du restaurant.');
+                    }
+                }
+            );
+        }
+    } else {
+        await sendFood(message, usermessage);
+    }
+}
+
 async function sendFood(message, messageContent) {
     let split = messageContent.split(' ');
     if (split.length === 3) {
         let ville = split[2];
         message.reply(await foodRequest.getFood(ville));
     } else {
-        message.reply('Erreur de syntaxe, la commande est : b! food <ville>');
+        message.reply('Erreur de syntaxe, la commande est : `b! food <ville>`');
     }
 }
 function sendWeather(message, messageContent) {
@@ -80,19 +100,19 @@ function sendWeather(message, messageContent) {
     if  (split.length === 3) {
         let ville = split[2];
         meteoRequest.getWeather(ville).then((meteo) => {
-            message.reply('Il fait un temps ' + meteo.weather[0].description + ' à ' + ville + ' avec une température de ' + meteo.main.temp + '°C');
+            message.reply('Il fait un temps ' + meteo.weather[0].description + ' à ' +  ville.charAt(0).toUpperCase() + ville.slice(1) + ' avec une température de ' + meteo.main.temp + '°C');
         });
     } else {
         message.reply('Erreur de syntaxe, la commande est : b! meteo <ville>');
     }
 }
 
-function sendSpotifyLinkWithYoutubeId(message, youtubeId) {
-    youtubeRequest.getVideoTitle(youtubeId).then(title => {
-        spotifyRequest.getSongUrl(title).then(url => {
-            message.reply(url).then();
-        });
-    });
-}
+// function sendSpotifyLinkWithYoutubeId(message, youtubeId) {
+//     youtubeRequest.getVideoTitle(youtubeId).then(title => {
+//         spotifyRequest.getSongUrl(title).then(url => {
+//             message.reply(url).then();
+//         });
+//     });
+// }
 
-client.login(process.env.DISCORD_TOKEN).then(r => console.log('Logged in')).catch(e => console.log(e));
+client.login(process.env.DISCORD_TOKEN).then(() => console.log('Logged in')).catch(e => console.log(e));
