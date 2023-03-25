@@ -70,7 +70,7 @@ async function foodFunction(message, usermessage) {
         if ( !command[3] || !command[4] ) {
             message.reply('Erreur de syntaxe, la commande est : `b! food add <ville> <restaurant>`');
         } else {
-            await foodRequest.postFood(command[3], command[4], 'test', message.guildId).then(
+            await foodRequest.postFood(command[3], command[4], message.author.username, message.guildId).then(
                 (data) => {
                     if (data) {
                         message.reply('Restaurant ajouté avec succès !');
