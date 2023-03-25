@@ -1,14 +1,26 @@
+const Supabase = require("./supabase");
+const supabaseRequest = new Supabase();
+
 class Food {
-    data = {
-        'nancy': ['Burger King', 'Waffle Factory', 'Mon Caribou', 'Nemo', 'Voyou', 'Papa Fries', 'O Noodles', 'KFC', 'Tizi', 'Basilic & Co', 'Fox Den'],
-        'metz': ['Burger King', 'Waffle Factory', 'Woko', 'Kefan', 'Colombus', 'Mon Caribou', 'Ayako Sushi', 'Tacos', 'Burritos', 'Au bureau'],
-    }
-    getFood(city) {
-        if (!this.data[city]) {
-            return 'Ville inconnue';
+    async getFood(city) {
+        const foods = await supabaseRequest.getFood(city).then((data) => {
+            return data;
+        });
+
+        if (foods.length === 0) {
+            return ' :x: Aucun restaurant trouvé pour cette ville.\n Vous pouvez en ajouter avec la commande `b! food add <ville> <restaurant>`.'
         }
-        return this.data[city][this.getRandomInt(this.data[city].length)];
+        return foods[this.getRandomInt(foods.length)].restaurant;
     }
+
+    async postFood(city, restaurant, created_by, server) {
+        return await supabaseRequest.postFood(city, restaurant, created_by, server).then(() => {
+            return true;
+        }).catch(() => {
+            return false;
+        });
+    }
+
     getRandomInt(max) {
         return Math.floor(Math.random() * max);
     }
